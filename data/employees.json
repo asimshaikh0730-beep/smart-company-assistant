@@ -1,0 +1,4 @@
+{
+  "E101": {"name": "Riya Sharma", "leave_balance": {"annual": 12, "sick": 6, "casual": 4}},
+  "E102": {"name": "Arjun Mehta", "leave_balance": {"annual": 5, "sick": 8, "casual": 2}}
+}

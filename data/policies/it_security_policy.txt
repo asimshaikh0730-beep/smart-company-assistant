@@ -1,0 +1,19 @@
+ACME TECH PVT LTD - IT AND INFORMATION SECURITY POLICY
+
+1. Passwords
+Passwords must be at least 12 characters long and must be changed every 90 days. Never share your password with anyone, including IT staff.
+
+2. Multi-factor authentication
+Multi-factor authentication (MFA) is mandatory for email, VPN and all company applications.
+
+3. Lost or stolen devices
+If a laptop or phone is lost or stolen, report it to the security team at security@acmetech.example within 2 hours. The device will be locked remotely.
+
+4. Data handling
+Company data must not be stored on personal drives, personal email or personal cloud accounts. USB storage devices are blocked on company laptops.
+
+5. Software
+Only software approved by IT may be installed. Requests for new software go through the IT service desk.
+
+6. Phishing
+Report suspicious emails to security@acmetech.example. Do not click links or open attachments from unknown senders.
