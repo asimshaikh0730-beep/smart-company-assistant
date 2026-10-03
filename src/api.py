@@ -1,10 +1,11 @@
 """FastAPI web service.   Run:  uvicorn src.api:app --reload"""
+import secrets
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, Field
 
-from src import vector_store
+from src import config, vector_store
 from src.agent import ask
 from src.guardrails import looks_like_injection, mask_pii, too_long
 from src.ingest import build_index
@@ -19,6 +20,12 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Smart Company Assistant", lifespan=lifespan)
+def require_api_key(x_api_key: str | None = Header(default=None)):
+    """Reject requests that do not send the right X-API-Key header."""
+    if config.API_ACCESS_KEY and not secrets.compare_digest(
+        x_api_key or "", config.API_ACCESS_KEY
+    ):
+        raise HTTPException(status_code=401, detail="Invalid or missing API key.")
 
 
 class AskRequest(BaseModel):
@@ -35,7 +42,7 @@ def health():
     return {"status": "ok", "indexed_chunks": vector_store.count()}
 
 
-@app.post("/ask", response_model=AskResponse)
+@app.post("/ask", response_model=AskResponse, dependencies=[Depends(require_api_key)])
 def ask_endpoint(req: AskRequest):
     if too_long(req.question):
         raise HTTPException(status_code=400, detail="Question is too long.")

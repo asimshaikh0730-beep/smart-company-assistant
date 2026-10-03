@@ -28,3 +28,4 @@ MAX_DISTANCE = 0.75  # cosine distance cut-off (lower = stricter). Tune using th
 
 # Guardrails
 MAX_QUESTION_CHARS = 1000
+API_ACCESS_KEY = os.getenv("API_ACCESS_KEY", "")  # empty = no protection (local dev only)
