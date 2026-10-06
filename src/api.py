@@ -1,8 +1,10 @@
 """FastAPI web service.   Run:  uvicorn src.api:app --reload"""
 import secrets
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from src import config, vector_store
@@ -20,6 +22,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Smart Company Assistant", lifespan=lifespan)
+
+STATIC_DIR = Path(__file__).parent / "static"
+
+
 def require_api_key(x_api_key: str | None = Header(default=None)):
     """Reject requests that do not send the right X-API-Key header."""
     if config.API_ACCESS_KEY and not secrets.compare_digest(
@@ -35,6 +41,12 @@ class AskRequest(BaseModel):
 
 class AskResponse(BaseModel):
     answer: str
+
+
+@app.get("/", include_in_schema=False)
+def home():
+    """Serve the chat page."""
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 @app.get("/health")
