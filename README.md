@@ -1,3 +1,6 @@
+# Live demo (free tier, may take about a minute to wake up):
+https://smart-company-assistant.onrender.com/
+
 # Smart Company Assistant (free-stack GenAI project)
 
 An HR assistant for a fictional company ("Acme Tech"). It answers policy questions
